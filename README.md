@@ -1,1 +1,1 @@
-# montecarlo
+# Nested Monte Carlo Search
