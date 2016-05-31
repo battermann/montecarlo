@@ -28,7 +28,7 @@ public class IntegrationTests {
 
 		board.ifPresent(x -> {
 			INmcsState<SGBoard, Point> state = new SGNmctsState(x);
-			Pair<Double, ArrayList<Point>> result = NestedMonteCarloSearch.executeSearch(state, 2);
+			Pair<Double, ArrayList<Point>> result = NestedMonteCarloSearch.executeSearch(state, 2, () -> true);
 			System.out.println("NMCS: " + result.item1);
 			System.out.println(result.item2);
 		});
@@ -47,7 +47,7 @@ public class IntegrationTests {
 				BoardGenerator.generateRandomBoard(rnd.nextInt(5) + 1, rnd.nextInt(5) + 1, rnd.nextInt(4) + 1))
 			.forEach(board -> {
 				INmcsState<SGBoard, Point> state = new SGNmctsState(board);
-				Pair<Double, ArrayList<Point>> result = NestedMonteCarloSearch.executeSearch(state, rnd.nextInt(4) + 1);
+				Pair<Double, ArrayList<Point>> result = NestedMonteCarloSearch.executeSearch(state, rnd.nextInt(4) + 1, () -> true);
 
 				SGBoard sgBoard = new SGBoard(board);
 				for (Point move : result.item2) {
@@ -60,15 +60,22 @@ public class IntegrationTests {
 	
 	@Test
 	public void Test() {
-		int[][] board = BoardGenerator.generateRandomBoard(8, 8, 4);
+		final long runningTimeMs = 20000;
+		
+		int[][] board = BoardGenerator.generateRandomBoard(20, 20, 4);
+
+		System.out.printf("Time: %s ms\n", runningTimeMs);
+		
 		INmcsState<SGBoard, Point> state = new SGNmctsState(board);
 
-		long start = System.currentTimeMillis();
-		Pair<Double, ArrayList<Point>> resultNmcs = NestedMonteCarloSearch.executeSearch(state, 3);
-		long runningTimeInMs = System.currentTimeMillis() - start;
-		System.out.printf("NMCS: %s (time: %s ms)\n", resultNmcs.item1, runningTimeInMs);
+		final long endTimeMs = System.currentTimeMillis() + runningTimeMs;
+		Pair<Double, ArrayList<Point>> resultNmcs = NestedMonteCarloSearch.executeSearch(state, 2, () -> {
+			return System.currentTimeMillis() > endTimeMs;
+		});
 		
-		Pair<Double, ArrayList<Point>> resultRnd = SGRandomSearch.executeSearch(board, runningTimeInMs);
+		System.out.printf("NMCS: %s\n", resultNmcs.item1);
+		
+		Pair<Double, ArrayList<Point>> resultRnd = SGRandomSearch.executeSearch(board, runningTimeMs);
 		System.out.println("RANDOM: " + resultRnd.item1);
 	}
 	
