@@ -20,7 +20,7 @@ import samegame.SGRandomSearch;
 
 public class IntegrationTests {
 	@Test
-	public void NmctsIntegrationTest_smallBoard() {
+	public void nmctsIntegrationTest_smallBoard() {
 		Optional<int[][]> board = BoardGenerator.generateBoard("1,1;2,2;");
 
 		if (!board.isPresent())
@@ -35,7 +35,7 @@ public class IntegrationTests {
 	}
 
 	@Test
-	public void NmctsPropertyTest_FoundSolutionHasCorrectScore() {
+	public void nmctsPropertyTest_FoundSolutionHasCorrectScore() {
 		Random rnd = new Random();
 		
 		Stream.of(
@@ -59,9 +59,8 @@ public class IntegrationTests {
 	}
 	
 	@Test
-	public void Test() {
-		final long runningTimeMs = 20000;
-		
+	public void compare_strategies() {
+		final long runningTimeMs = 30000;
 		int[][] board = BoardGenerator.generateRandomBoard(20, 20, 4);
 
 		System.out.printf("Time: %s ms\n", runningTimeMs);

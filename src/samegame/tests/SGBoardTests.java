@@ -38,6 +38,7 @@ public class SGBoardTests {
 		
 		board.ifPresent(x -> {
 			SGBoard sgBoard = new SGBoard(x);
+			sgBoard.removeGroup(new Point(2,2));
 			sgBoard.removeGroup(new Point(0,1));
 			sgBoard.removeGroup(new Point(0,0));
 			
