@@ -38,7 +38,7 @@ public class SGBoard {
 	public static SGBoard copy(final SGBoard board) {
 		return new SGBoard(board);
 	}
-	
+
 	public SGBoard copy() {
 		return new SGBoard(this);
 	}
@@ -258,10 +258,15 @@ public class SGBoard {
 	private boolean isNewAndNotEmpty(final ArrayList<Point> pointsToSkip, final Point move) {
 		return getColorOfStone(move) != 0 && !pointsToSkip.contains(move);
 	}
-	
+
 	@Override
 	public String toString() {
-		return String.format("%s\nScore: %s", Arrays.deepToString(_board), _score);
+		String output = "";
+		for (int i = 0; i < _board[0].length; i++) {
+			output += String.format("%s\n", Arrays.toString(_board[i]));
+		}
+		output += String.format("Score: %s", _score);
+		return output;
 	}
-	
+
 }
