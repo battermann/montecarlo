@@ -9,20 +9,22 @@ import montecarlo.Pair;
 
 public class SGNmctsState implements INmcsState<SGBoard, Point>{
 	private final static Random rnd = new Random();
-	
 	private final SGBoard _sgBoard;
+	private final ArrayList<Point> _allLegalActions;
 	
 	public SGNmctsState(int[][] board) {
 		_sgBoard = new SGBoard(board);
+		_allLegalActions = _sgBoard.findAllLegalMoves();
 	}
 	
 	private SGNmctsState(SGBoard sgBoard) {
 		_sgBoard = sgBoard;
+		_allLegalActions = _sgBoard.findAllLegalMoves();
 	}
 
 	@Override
 	public boolean isTerminalPosition() {
-		return findAllLegalActions().size() == 0;
+		return _allLegalActions.size() == 0;
 	}
 
 	@Override

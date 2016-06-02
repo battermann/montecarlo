@@ -18,7 +18,8 @@ public class NestedMonteCarloSearch {
 
 			for (TAction action : state.findAllLegalActions()) {
 				final INmcsState<TState, TAction> currentState = state.TakeAction(action);
-				final Pair<Double, ArrayList<TAction>> simulationResult = level <= 1 ? currentState.simulation()
+				final Pair<Double, ArrayList<TAction>> simulationResult = level <= 1 
+						? currentState.simulation()
 						: executeSearch(currentState, level - 1, isCanceled);
 
 				if (simulationResult.item1 >= currentBestResult.item1) {

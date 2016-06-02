@@ -28,7 +28,7 @@ public class IntegrationTests {
 
 		board.ifPresent(x -> {
 			INmcsState<SGBoard, Point> state = new SGNmctsState(x);
-			Pair<Double, ArrayList<Point>> result = NestedMonteCarloSearch.executeSearch(state, 2, () -> true);
+			Pair<Double, ArrayList<Point>> result = NestedMonteCarloSearch.executeSearch(state, 2, () -> false);
 			System.out.println("NMCS: " + result.item1);
 			System.out.println(result.item2);
 		});
@@ -39,21 +39,22 @@ public class IntegrationTests {
 		Random rnd = new Random();
 		
 		Stream.of(
-				BoardGenerator.generateRandomBoard(rnd.nextInt(5) + 1, rnd.nextInt(5) + 1, rnd.nextInt(4) + 1),
-				BoardGenerator.generateRandomBoard(rnd.nextInt(5) + 1, rnd.nextInt(5) + 1, rnd.nextInt(4) + 1),
-				BoardGenerator.generateRandomBoard(rnd.nextInt(5) + 1, rnd.nextInt(5) + 1, rnd.nextInt(4) + 1),
-				BoardGenerator.generateRandomBoard(rnd.nextInt(5) + 1, rnd.nextInt(5) + 1, rnd.nextInt(4) + 1),
-				BoardGenerator.generateRandomBoard(rnd.nextInt(5) + 1, rnd.nextInt(5) + 1, rnd.nextInt(4) + 1),
-				BoardGenerator.generateRandomBoard(rnd.nextInt(5) + 1, rnd.nextInt(5) + 1, rnd.nextInt(4) + 1))
+				BoardGenerator.generateRandomBoard(rnd.nextInt(3) + 4, rnd.nextInt(3) + 4, rnd.nextInt(4) + 1),
+				BoardGenerator.generateRandomBoard(rnd.nextInt(3) + 4, rnd.nextInt(3) + 4, rnd.nextInt(4) + 1),
+				BoardGenerator.generateRandomBoard(rnd.nextInt(3) + 4, rnd.nextInt(3) + 4, rnd.nextInt(4) + 1),
+				BoardGenerator.generateRandomBoard(rnd.nextInt(3) + 4, rnd.nextInt(3) + 4, rnd.nextInt(4) + 1),
+				BoardGenerator.generateRandomBoard(rnd.nextInt(3) + 4, rnd.nextInt(3) + 4, rnd.nextInt(4) + 1),
+				BoardGenerator.generateRandomBoard(rnd.nextInt(3) + 4, rnd.nextInt(3) + 4, rnd.nextInt(4) + 1))
 			.forEach(board -> {
 				INmcsState<SGBoard, Point> state = new SGNmctsState(board);
-				Pair<Double, ArrayList<Point>> result = NestedMonteCarloSearch.executeSearch(state, rnd.nextInt(4) + 1, () -> true);
+				Pair<Double, ArrayList<Point>> result = NestedMonteCarloSearch.executeSearch(state, rnd.nextInt(3) + 1, () -> false);
 
 				SGBoard sgBoard = new SGBoard(board);
 				for (Point move : result.item2) {
 					sgBoard.removeGroup(move);
 				}
 				
+				assertNotEquals(0.0, result.item1, 0.01);
 				assertEquals((double) sgBoard.getScore(), result.item1, 0.01);
 			});
 	}

@@ -262,7 +262,7 @@ public class SGBoard {
 	@Override
 	public String toString() {
 		String output = "";
-		for (int i = 0; i < _board[0].length; i++) {
+		for (int i = 0; i < _board.length; i++) {
 			output += String.format("%s\n", Arrays.toString(_board[i]));
 		}
 		output += String.format("Score: %s", _score);
