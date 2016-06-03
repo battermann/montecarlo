@@ -3,19 +3,12 @@ package samegame.tests;
 import static org.junit.Assert.*;
 
 import java.awt.Point;
-import java.util.ArrayList;
 import java.util.Optional;
-import java.util.Random;
-import java.util.stream.Stream;
 
 import org.junit.Test;
 
-import montecarlo.INmcsState;
-import montecarlo.NestedMonteCarloSearch;
-import montecarlo.Pair;
 import samegame.BoardGenerator;
 import samegame.SGBoard;
-import samegame.SGNmctsState;
 
 public class SGBoardTests {
 
