@@ -46,7 +46,7 @@ public interface INmcsState<TState, TAction> {
 	 * Perform a (level-0) play-out until a terminal state is created.
 	 * 
 	 * <p>
-	 * The play-out can be random or guided.
+	 * The play-out policy can be random or guided.
 	 * 
 	 * <p>
 	 * Calling this method does not change the state of the object.
