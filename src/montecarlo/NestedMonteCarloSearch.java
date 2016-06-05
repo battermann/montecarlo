@@ -8,6 +8,7 @@ public class NestedMonteCarloSearch {
 	public static <TState, TAction> Pair<Double, ArrayList<TAction>> executeSearch(INmcsState<TState, TAction> state,
 			final int level, final Supplier<Boolean> isCanceled) {
 
+		// terminating case
 		if(level <= 0) 
 			return state.simulation();
 		
