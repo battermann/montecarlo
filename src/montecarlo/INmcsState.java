@@ -40,7 +40,7 @@ public interface INmcsState<TState, TAction> {
 	 *            action to be applied to the state.
 	 * @return new state after action was applied.
 	 */
-	INmcsState<TState, TAction> TakeAction(TAction action);
+	INmcsState<TState, TAction> takeAction(TAction action);
 
 	/**
 	 * Perform a (level-0) play-out until a terminal state is created.

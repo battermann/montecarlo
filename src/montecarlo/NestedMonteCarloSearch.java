@@ -21,7 +21,7 @@ public class NestedMonteCarloSearch {
 			TAction currentBestAction = null;
 
 			for (TAction action : state.findAllLegalActions()) {
-				final INmcsState<TState, TAction> currentState = state.TakeAction(action);
+				final INmcsState<TState, TAction> currentState = state.takeAction(action);
 				final Pair<Double, ArrayList<TAction>> simulationResult = executeSearch(currentState, level - 1,
 						isCanceled);
 
@@ -38,7 +38,7 @@ public class NestedMonteCarloSearch {
 				globalBestResult.item2.addAll(0, previousAppliedActions);
 			}
 
-			state = state.TakeAction(currentBestAction);
+			state = state.takeAction(currentBestAction);
 		}
 		return globalBestResult;
 	}

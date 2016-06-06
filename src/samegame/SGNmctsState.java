@@ -33,7 +33,7 @@ public class SGNmctsState implements INmcsState<SGBoard, Point>{
 	}
 
 	@Override
-	public INmcsState<SGBoard, Point> TakeAction(final Point action) {
+	public INmcsState<SGBoard, Point> takeAction(final Point action) {
 		final SGBoard newState = _sgBoard.copy();
 		newState.removeGroup(action);
 		return new SGNmctsState(newState);
