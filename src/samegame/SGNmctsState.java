@@ -2,6 +2,7 @@ package samegame;
 
 import java.awt.Point;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import montecarlo.INmcsState;
@@ -40,7 +41,7 @@ public class SGNmctsState implements INmcsState<SGBoard, Point>{
 	}
 
 	@Override
-	public Pair<Double, ArrayList<Point>> simulation() {
+	public Pair<Double, List<Point>> simulation() {
 		final ArrayList<Point> simulation = new ArrayList<Point>();
 		final SGBoard tempBoard = _sgBoard.copy();
 		ArrayList<Point> groups = tempBoard.findAllLegalMoves();

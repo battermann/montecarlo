@@ -2,21 +2,22 @@ package samegame;
 
 import java.awt.Point;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import montecarlo.Pair;
 
 public class SGRandomSearch {
 	
-	public static Pair<Double, ArrayList<Point>> executeSearch(final int[][] board, final long runningTimeInMs) {
+	public static Pair<Double, List<Point>> executeSearch(final int[][] board, final long runningTimeInMs) {
 		final long start = System.currentTimeMillis();
 		final long end = start + runningTimeInMs;
 		
 		final Random rnd = new Random();
-		Pair<Double, ArrayList<Point>> bestResult = simulation(rnd, board);
+		Pair<Double, List<Point>> bestResult = simulation(rnd, board);
 		
 		while(System.currentTimeMillis() < end) {
-			final Pair<Double, ArrayList<Point>> currentResult = simulation(rnd, board);
+			final Pair<Double, List<Point>> currentResult = simulation(rnd, board);
 			if(currentResult.item1 > bestResult.item1)
 				bestResult = currentResult;
 		}
@@ -24,7 +25,7 @@ public class SGRandomSearch {
 		return bestResult;
 	}
 	
-	public static Pair<Double, ArrayList<Point>> simulation(final Random rnd, final int[][] board) {
+	public static Pair<Double, List<Point>> simulation(final Random rnd, final int[][] board) {
 		final ArrayList<Point> simulation = new ArrayList<Point>();
 		final SGBoard tempBoard = new SGBoard(board);
 		ArrayList<Point> groups = tempBoard.findAllLegalMoves();

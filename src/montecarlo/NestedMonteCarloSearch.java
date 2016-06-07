@@ -1,28 +1,29 @@
 package montecarlo;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Supplier;
 
 public class NestedMonteCarloSearch {
 
-	public static <TState, TAction> Pair<Double, ArrayList<TAction>> executeSearch(INmcsState<TState, TAction> state,
+	public static <TState, TAction> Pair<Double, List<TAction>> executeSearch(INmcsState<TState, TAction> state,
 			final int level, final Supplier<Boolean> isCanceled) {
 
 		// terminating case
 		if(level <= 0) 
 			return state.simulation();
 		
-		Pair<Double, ArrayList<TAction>> globalBestResult = Pair.of(state.getScore(), new ArrayList<TAction>());
-		final ArrayList<TAction> previousAppliedActions = new ArrayList<TAction>();
+		Pair<Double, List<TAction>> globalBestResult = Pair.of(state.getScore(), new ArrayList<TAction>());
+		final List<TAction> previousAppliedActions = new ArrayList<TAction>();
 
 		while (!state.isTerminalPosition() && !isCanceled.get()) {
 
-			Pair<Double, ArrayList<TAction>> currentBestResult = Pair.of(0.0, new ArrayList<TAction>());
+			Pair<Double, List<TAction>> currentBestResult = Pair.of(0.0, new ArrayList<TAction>());
 			TAction currentBestAction = null;
 
 			for (TAction action : state.findAllLegalActions()) {
 				final INmcsState<TState, TAction> currentState = state.takeAction(action);
-				final Pair<Double, ArrayList<TAction>> simulationResult = executeSearch(currentState, level - 1,
+				final Pair<Double, List<TAction>> simulationResult = executeSearch(currentState, level - 1,
 						isCanceled);
 
 				if (simulationResult.item1 >= currentBestResult.item1) {

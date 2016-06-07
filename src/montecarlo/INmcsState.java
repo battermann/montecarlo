@@ -1,6 +1,6 @@
 package montecarlo;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This interface represents the state of a problem, game or puzzle that can be
@@ -30,7 +30,7 @@ public interface INmcsState<TState, TAction> {
 	 * Get all legal actions that can be applied to this state.
 	 * @return all legal actions.
 	 */
-	ArrayList<TAction> findAllLegalActions();
+	List<TAction> findAllLegalActions();
 
 	/**
 	 * Apply an action to the state. The result of the application is returned from this function.
@@ -54,5 +54,5 @@ public interface INmcsState<TState, TAction> {
 	 * @return a tuple that contains the result (score) of the play-out and a
 	 *         list of actions that are applied during the play-out.
 	 */
-	Pair<Double, ArrayList<TAction>> simulation();
+	Pair<Double, List<TAction>> simulation();
 }

@@ -3,7 +3,7 @@ package samegame.tests;
 import static org.junit.Assert.*;
 
 import java.awt.Point;
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 import java.util.stream.Stream;
@@ -36,7 +36,7 @@ public class IntegrationTests {
 			final INmcsState<SGBoard, Point> state = new SGNmctsState(x);
 
 			final long endTimeMs = System.currentTimeMillis() + runningTimeMs;
-			final Pair<Double, ArrayList<Point>> result = NestedMonteCarloSearch.executeSearch(state, level, () -> {
+			final Pair<Double, List<Point>> result = NestedMonteCarloSearch.executeSearch(state, level, () -> {
 				return System.currentTimeMillis() > endTimeMs;
 			});
 			
@@ -58,7 +58,7 @@ public class IntegrationTests {
 				BoardGenerator.generateRandomBoard(rnd.nextInt(3) + 4, rnd.nextInt(3) + 4, rnd.nextInt(4) + 1))
 			.forEach(board -> {
 				INmcsState<SGBoard, Point> state = new SGNmctsState(board);
-				Pair<Double, ArrayList<Point>> result = NestedMonteCarloSearch.executeSearch(state, rnd.nextInt(3) + 1, () -> false);
+				Pair<Double, List<Point>> result = NestedMonteCarloSearch.executeSearch(state, rnd.nextInt(3) + 1, () -> false);
 
 				SGBoard sgBoard = new SGBoard(board);
 				for (Point move : result.item2) {
@@ -80,13 +80,13 @@ public class IntegrationTests {
 		INmcsState<SGBoard, Point> state = new SGNmctsState(board);
 
 		final long endTimeMs = System.currentTimeMillis() + runningTimeMs;
-		Pair<Double, ArrayList<Point>> resultNmcs = NestedMonteCarloSearch.executeSearch(state, 2, () -> {
+		Pair<Double, List<Point>> resultNmcs = NestedMonteCarloSearch.executeSearch(state, 2, () -> {
 			return System.currentTimeMillis() > endTimeMs;
 		});
 		
 		System.out.printf("NMCS: %s\n", resultNmcs.item1);
 		
-		Pair<Double, ArrayList<Point>> resultRnd = SGRandomSearch.executeSearch(board, runningTimeMs);
+		Pair<Double, List<Point>> resultRnd = SGRandomSearch.executeSearch(board, runningTimeMs);
 		System.out.println("RANDOM: " + resultRnd.item1);
 	}	
 }
