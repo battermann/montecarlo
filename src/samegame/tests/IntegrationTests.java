@@ -46,7 +46,7 @@ public class IntegrationTests {
 	
 	//@Test
 	public void compare_strategies() {
-		final long runningTimeMs = 30000;
+		final long runningTimeMs = 30 * 1000;
 		int[][] board = BoardGenerator.generateRandomBoard(20, 20, 4);
 
 		System.out.printf("Time: %s ms\n", runningTimeMs);

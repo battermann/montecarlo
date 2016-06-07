@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.function.Supplier;
 
 public class NestedMonteCarloSearch {
-
 	public static <TState, TAction> Pair<Double, List<TAction>> executeSearch(INmcsState<TState, TAction> state,
 			final int level, final Supplier<Boolean> isCanceled) {
 
@@ -18,23 +17,25 @@ public class NestedMonteCarloSearch {
 
 		while (!state.isTerminalPosition() && !isCanceled.get()) {
 
-			Pair<Double, List<TAction>> currentBestResult = Pair.of(0.0, new LinkedList<TAction>());
-			TAction currentBestAction = null;
+			final INmcsState<TState, TAction> curentNode = state;
 
-			for (TAction action : state.findAllLegalActions()) {
-				final INmcsState<TState, TAction> currentState = state.takeAction(action);
-				// recursion
-				final Pair<Double, List<TAction>> simulationResult = executeSearch(currentState, level - 1, isCanceled);
+			Triple<TAction, Double, List<TAction>> currentBestResult = state
+				.findAllLegalActions()
+				.stream()
+				.parallel()
+				.map(action -> {
+					final INmcsState<TState, TAction> child = curentNode.takeAction(action);
+					// recursion
+					Pair<Double, List<TAction>> result = executeSearch(child, level - 1, isCanceled);
+					return Triple.of(action, result.item1, result.item2);
+				})
+				.max((x, y) -> x.item2.compareTo(y.item2)).get();
 
-				if (simulationResult.item1 >= currentBestResult.item1) {
-					currentBestAction = action;
-					currentBestResult = simulationResult;
-				}
-			}
+			TAction currentBestAction = currentBestResult.item1;
 
-			if (currentBestResult.item1 >= globalBestResult.item1) {
+			if (currentBestResult.item2 >= globalBestResult.item1) {
 				visitedNodes.add(currentBestAction);
-				globalBestResult = currentBestResult;
+				globalBestResult = Pair.of(currentBestResult.item2, currentBestResult.item3);
 				globalBestResult.item2.addAll(0, visitedNodes);
 			} else {
 				currentBestAction = globalBestResult.item2.get(visitedNodes.size());
@@ -43,6 +44,7 @@ public class NestedMonteCarloSearch {
 
 			state = state.takeAction(currentBestAction);
 		}
+
 		return globalBestResult;
 	}
 }
