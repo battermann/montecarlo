@@ -1,7 +1,7 @@
 package samegame;
 
 import java.awt.Point;
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
@@ -11,7 +11,7 @@ import montecarlo.Pair;
 public class SGNmctsState implements INmcsState<SGBoard, Point>{
 	private final static Random rnd = new Random();
 	private final SGBoard _sgBoard;
-	private final ArrayList<Point> _allLegalActions;
+	private final List<Point> _allLegalActions;
 	
 	public SGNmctsState(int[][] board) {
 		_sgBoard = new SGBoard(board);
@@ -29,7 +29,7 @@ public class SGNmctsState implements INmcsState<SGBoard, Point>{
 	}
 
 	@Override
-	public ArrayList<Point> findAllLegalActions() {
+	public List<Point> findAllLegalActions() {
 		return _sgBoard.findAllLegalMoves();
 	}
 
@@ -42,9 +42,9 @@ public class SGNmctsState implements INmcsState<SGBoard, Point>{
 
 	@Override
 	public Pair<Double, List<Point>> simulation() {
-		final ArrayList<Point> simulation = new ArrayList<Point>();
+		final List<Point> simulation = new LinkedList<Point>();
 		final SGBoard tempBoard = _sgBoard.copy();
-		ArrayList<Point> groups = tempBoard.findAllLegalMoves();
+		List<Point> groups = tempBoard.findAllLegalMoves();
 		while (groups.size() > 0) {
 			final Point randomMove = groups.get(rnd.nextInt(groups.size()));
 			tempBoard.removeGroup(randomMove);

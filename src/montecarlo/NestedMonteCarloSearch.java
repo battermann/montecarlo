@@ -1,6 +1,6 @@
 package montecarlo;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.function.Supplier;
 
@@ -13,12 +13,12 @@ public class NestedMonteCarloSearch {
 		if (level <= 0)
 			return state.simulation();
 
-		Pair<Double, List<TAction>> globalBestResult = Pair.of(state.getScore(), new ArrayList<TAction>());
-		final List<TAction> visitedNodes = new ArrayList<TAction>();
+		Pair<Double, List<TAction>> globalBestResult = Pair.of(state.getScore(), new LinkedList<TAction>());
+		final List<TAction> visitedNodes = new LinkedList<TAction>();
 
 		while (!state.isTerminalPosition() && !isCanceled.get()) {
 
-			Pair<Double, List<TAction>> currentBestResult = Pair.of(0.0, new ArrayList<TAction>());
+			Pair<Double, List<TAction>> currentBestResult = Pair.of(0.0, new LinkedList<TAction>());
 			TAction currentBestAction = null;
 
 			for (TAction action : state.findAllLegalActions()) {
