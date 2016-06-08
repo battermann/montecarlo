@@ -14,19 +14,19 @@ public class SGNmctsState implements INmcsState<SGBoard, Point>{
 	private final List<Point> _allLegalActions;
 	private final Pair<Double, List<Point>> _initialSolution;
 	
-	public SGNmctsState(int[][] board) {
-		this(new SGBoard(board), Pair.of(0.0, new LinkedList<Point>()));
+	public SGNmctsState(final int[][] board) {
+		this(new SGBoard(board));
 	}
 	
-	public SGNmctsState(int[][] board, Pair<Double, List<Point>> initialSolution) {
+	public SGNmctsState(final int[][] board, final Pair<Double, List<Point>> initialSolution) {
 		this(new SGBoard(board), initialSolution);
 	}
 	
-	private SGNmctsState(SGBoard sgBoard) {
-		this(sgBoard, Pair.of(0.0, new LinkedList<Point>()));
+	private SGNmctsState(final SGBoard sgBoard) {
+		this(sgBoard, Pair.of((double) sgBoard.getScore(), new LinkedList<Point>()));
 	}
 	
-	private SGNmctsState(SGBoard sgBoard, Pair<Double, List<Point>> initialSolution) {
+	private SGNmctsState(final SGBoard sgBoard, final Pair<Double, List<Point>> initialSolution) {
 		_sgBoard = sgBoard;
 		_allLegalActions = _sgBoard.findAllLegalMoves();
 		_initialSolution = initialSolution;
