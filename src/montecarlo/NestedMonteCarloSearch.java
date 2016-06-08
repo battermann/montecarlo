@@ -12,7 +12,7 @@ public class NestedMonteCarloSearch {
 		if (level <= 0)
 			return state.simulation();
 
-		Pair<Double, List<TAction>> globalBestResult = Pair.of(state.getScore(), new LinkedList<TAction>());
+		Pair<Double, List<TAction>> globalBestResult = state.getInitionSolution();
 		final List<TAction> visitedNodes = new LinkedList<TAction>();
 
 		while (!state.isTerminalPosition() && !isCanceled.get()) {

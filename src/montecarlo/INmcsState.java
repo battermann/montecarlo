@@ -55,4 +55,6 @@ public interface INmcsState<TState, TAction> {
 	 *         list of actions that are applied during the play-out.
 	 */
 	Pair<Double, List<TAction>> simulation();
+	
+	Pair<Double, List<TAction>> getInitionSolution();
 }

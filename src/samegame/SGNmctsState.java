@@ -12,15 +12,24 @@ public class SGNmctsState implements INmcsState<SGBoard, Point>{
 	private final static Random rnd = new Random();
 	private final SGBoard _sgBoard;
 	private final List<Point> _allLegalActions;
+	private final Pair<Double, List<Point>> _initialSolution;
 	
 	public SGNmctsState(int[][] board) {
-		_sgBoard = new SGBoard(board);
-		_allLegalActions = _sgBoard.findAllLegalMoves();
+		this(new SGBoard(board), Pair.of(0.0, new LinkedList<Point>()));
+	}
+	
+	public SGNmctsState(int[][] board, Pair<Double, List<Point>> initialSolution) {
+		this(new SGBoard(board), initialSolution);
 	}
 	
 	private SGNmctsState(SGBoard sgBoard) {
+		this(sgBoard, Pair.of(0.0, new LinkedList<Point>()));
+	}
+	
+	private SGNmctsState(SGBoard sgBoard, Pair<Double, List<Point>> initialSolution) {
 		_sgBoard = sgBoard;
 		_allLegalActions = _sgBoard.findAllLegalMoves();
+		_initialSolution = initialSolution;
 	}
 
 	@Override
@@ -62,6 +71,11 @@ public class SGNmctsState implements INmcsState<SGBoard, Point>{
 	@Override
 	public double getScore() {
 		return _sgBoard.getScore();
+	}
+
+	@Override
+	public Pair<Double, List<Point>> getInitionSolution() {
+		return _initialSolution;
 	}
 	
 }
